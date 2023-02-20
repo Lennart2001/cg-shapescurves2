@@ -132,9 +132,17 @@ class Renderer {
         this.drawTriangle(base_point_1, p_1_3, p_1_4, [0, 0, 128, 255], framebuffer);
         this.drawTriangle(base_point_1, p_1_4, p_1_5, [0, 0, 128, 255], framebuffer);
 
-        let point_memory = [base_point_0, p_0_0, p_0_1, p_0_2, p_0_3, p_0_4, p_0_5,
-        base_point_1, p_1_0, p_1_1, p_1_2, p_1_3, p_1_4, p_1_5];
+        let point_memory_0 = [base_point_0, p_0_0, p_0_1, p_0_2, p_0_3, p_0_4, p_0_5];
+        let point_memory_1 = [base_point_1, p_1_0, p_1_1, p_1_2, p_1_3, p_1_4, p_1_5];
 
+
+        for (let x = 0; x < point_memory_0.length; x++) {
+            this.drawVertex(point_memory_0[x], [0, 128, 128, 255], framebuffer)
+        }
+        // Not necessary in this example but we don't judge
+        for (let x = 0; x < point_memory_1.length; x++) {
+            this.drawVertex(point_memory_1[x], [0, 0, 128, 255], framebuffer)
+        }
 
 
     }
