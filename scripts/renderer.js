@@ -112,11 +112,7 @@ class Renderer {
         let p_0_4 = {x: 250, y: 260};
         let p_0_5 = {x: 230, y: 220};
 
-        this.drawTriangle(base_point_0, p_0_0, p_0_1, [0, 128, 128, 255], framebuffer);
-        this.drawTriangle(base_point_0, p_0_1, p_0_2, [0, 128, 128, 255], framebuffer);
-        this.drawTriangle(base_point_0, p_0_2, p_0_3, [0, 128, 128, 255], framebuffer);
-        this.drawTriangle(base_point_0, p_0_3, p_0_4, [0, 128, 128, 255], framebuffer);
-        this.drawTriangle(base_point_0, p_0_4, p_0_5, [0, 128, 128, 255], framebuffer);
+        let point_memory_0 = [base_point_0, p_0_0, p_0_1, p_0_2, p_0_3, p_0_4, p_0_5];
 
         let base_point_1 = {x: 500, y: 300};
         let p_1_0 = {x: 450, y: 350};
@@ -126,22 +122,20 @@ class Renderer {
         let p_1_4 = {x: 350, y: 340};
         let p_1_5 = {x: 330, y: 400};
 
-        this.drawTriangle(base_point_1, p_1_0, p_1_1, [0, 0, 128, 255], framebuffer);
-        this.drawTriangle(base_point_1, p_1_1, p_1_2, [0, 0, 128, 255], framebuffer);
-        this.drawTriangle(base_point_1, p_1_2, p_1_3, [0, 0, 128, 255], framebuffer);
-        this.drawTriangle(base_point_1, p_1_3, p_1_4, [0, 0, 128, 255], framebuffer);
-        this.drawTriangle(base_point_1, p_1_4, p_1_5, [0, 0, 128, 255], framebuffer);
-
-        let point_memory_0 = [base_point_0, p_0_0, p_0_1, p_0_2, p_0_3, p_0_4, p_0_5];
         let point_memory_1 = [base_point_1, p_1_0, p_1_1, p_1_2, p_1_3, p_1_4, p_1_5];
 
+        this.drawConvexPolygon(point_memory_0, [0, 128, 128, 255], framebuffer);
+        this.drawConvexPolygon(point_memory_1, [0, 0, 128, 255], framebuffer);
 
-        for (let x = 0; x < point_memory_0.length; x++) {
-            this.drawVertex(point_memory_0[x], [0, 128, 128, 255], framebuffer)
-        }
-        // Not necessary in this example but we don't judge
-        for (let x = 0; x < point_memory_1.length; x++) {
-            this.drawVertex(point_memory_1[x], [0, 0, 128, 255], framebuffer)
+
+        if (this.show_points) {
+            for (let x = 0; x < point_memory_0.length; x++) {
+                this.drawVertex(point_memory_0[x], [0, 128, 128, 255], framebuffer)
+            }
+            // Not necessary in this example but we don't judge
+            for (let x = 0; x < point_memory_1.length; x++) {
+                this.drawVertex(point_memory_1[x], [0, 0, 128, 255], framebuffer)
+            }
         }
 
 
@@ -224,7 +218,16 @@ class Renderer {
     // framebuffer:  canvas ctx image data
     drawConvexPolygon(vertex_list, color, framebuffer) {
         // TODO: draw a sequence of triangles to form a convex polygon
-        
+
+        let base_point = vertex_list[0]; // Base dude (point) is always at front
+
+        for (let x = 0; x < vertex_list.length-1; x++) {
+            this.drawTriangle(base_point, vertex_list[x], vertex_list[x+1], color, framebuffer); // Uhhh get the thang to be connected to the base point
+            // We create triangles, as teh polygon is essentially just a bunch of triangles concatenated togfeteher
+        }
+
+//        return vertex_list; // return for point highlighting
+        // We don't need this actually
         
     }
     
