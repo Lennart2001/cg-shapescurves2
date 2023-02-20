@@ -52,11 +52,32 @@ class Renderer {
         // TODO: draw at least 2 Bezier curves
         //   - variable `this.num_curve_sections` should be used for `num_edges`
         //   - variable `this.show_points` should be used to determine whether or not to render vertices
-        
-        
-        // Following line is example of drawing a single line
-        // (this should be removed after you implement the curve)
-        this.drawLine({x: 100, y: 100}, {x: 600, y: 300}, [255, 0, 0, 255], framebuffer);
+
+
+        // CREATE FIRST BEZIER CURVE
+        // We need to set the four points for the first curve
+        let p_0_0 = {x: 20, y:50}; // Start
+        let p_0_1 = {x: 200, y:350}; // Control
+        let p_0_2 = {x: 350, y:200}; // Control
+        let p_0_3 = {x: 400, y:400}; // End
+
+        // CREATE FIRST BEZIER CURVE
+        // We need to set the four points for the second curve
+        let p_1_0 = {x: 300, y:300}; // Start
+        let p_1_1 = {x: 400, y:200}; // Control
+        let p_1_2 = {x: 200, y:400}; // Control
+        let p_1_3 = {x: 500, y:500}; // End
+
+        let ps_0 = this.drawBezierCurve(p_0_0, p_0_1, p_0_2, p_0_3, this.num_curve_sections, [255, 0, 0, 255], framebuffer);
+        let ps_1 = this.drawBezierCurve(p_1_0, p_1_1, p_1_2, p_1_3, this.num_curve_sections, [0, 128, 128, 255], framebuffer);
+
+        if (this.show_points) {
+            for (let x = 0; x < ps_0.length-1; x++) {
+                this.drawVertex(ps_0[x], [255, 0, 0, 255], framebuffer);
+                this.drawVertex(ps_1[x], [0, 128, 128, 255], framebuffer);
+            }
+        }
+
     }
 
     // framebuffer:  canvas ctx image data
@@ -64,7 +85,17 @@ class Renderer {
         // TODO: draw at least 2 circles
         //   - variable `this.num_curve_sections` should be used for `num_edges`
         //   - variable `this.show_points` should be used to determine whether or not to render vertices
-        
+
+
+        let ps_0 = this.drawCircle({x: 100, y: 100}, 75, this.num_curve_sections, [255, 0, 0, 255], framebuffer);
+        let ps_1 = this.drawCircle({x: 200, y: 200}, 30, this.num_curve_sections, [0, 128, 128, 255], framebuffer);
+
+        if (this.show_points) {
+            for (let x = 0; x < ps_0.length-1; x++) {
+                this.drawVertex(ps_0[x], [255, 0, 0, 255], framebuffer);
+                this.drawVertex(ps_1[x], [0, 128, 128, 255], framebuffer);
+            }
+        }
         
     }
 
@@ -72,14 +103,40 @@ class Renderer {
     drawSlide2(framebuffer) {
         // TODO: draw at least 2 convex polygons (each with a different number of vertices >= 5)
         //   - variable `this.show_points` should be used to determine whether or not to render vertices
-        
-        
-        // Following lines are example of drawing a single triangle
-        // (this should be removed after you implement the polygon)
-        let point_a = {x:  80, y:  40};
-        let point_b = {x: 320, y: 160};
-        let point_c = {x: 240, y: 360};
-        this.drawTriangle(point_a, point_c, point_b, [0, 128, 128, 255], framebuffer);
+
+        let base_point_0 = {x: 320, y: 160};
+        let p_0_0 = {x: 340, y: 200};
+        let p_0_1 = {x: 320, y: 300};
+        let p_0_2 = {x: 300, y: 310};
+        let p_0_3 = {x: 270, y: 300};
+        let p_0_4 = {x: 250, y: 260};
+        let p_0_5 = {x: 230, y: 220};
+
+        this.drawTriangle(base_point_0, p_0_0, p_0_1, [0, 128, 128, 255], framebuffer);
+        this.drawTriangle(base_point_0, p_0_1, p_0_2, [0, 128, 128, 255], framebuffer);
+        this.drawTriangle(base_point_0, p_0_2, p_0_3, [0, 128, 128, 255], framebuffer);
+        this.drawTriangle(base_point_0, p_0_3, p_0_4, [0, 128, 128, 255], framebuffer);
+        this.drawTriangle(base_point_0, p_0_4, p_0_5, [0, 128, 128, 255], framebuffer);
+
+        let base_point_1 = {x: 500, y: 300};
+        let p_1_0 = {x: 450, y: 350};
+        let p_1_1 = {x: 470, y: 280};
+        let p_1_2 = {x: 430, y: 280};
+        let p_1_3 = {x: 390, y: 370};
+        let p_1_4 = {x: 350, y: 340};
+        let p_1_5 = {x: 330, y: 400};
+
+        this.drawTriangle(base_point_1, p_1_0, p_1_1, [0, 0, 128, 255], framebuffer);
+        this.drawTriangle(base_point_1, p_1_1, p_1_2, [0, 0, 128, 255], framebuffer);
+        this.drawTriangle(base_point_1, p_1_2, p_1_3, [0, 0, 128, 255], framebuffer);
+        this.drawTriangle(base_point_1, p_1_3, p_1_4, [0, 0, 128, 255], framebuffer);
+        this.drawTriangle(base_point_1, p_1_4, p_1_5, [0, 0, 128, 255], framebuffer);
+
+        let point_memory = [base_point_0, p_0_0, p_0_1, p_0_2, p_0_3, p_0_4, p_0_5,
+        base_point_1, p_1_0, p_1_1, p_1_2, p_1_3, p_1_4, p_1_5];
+
+
+
     }
 
     // framebuffer:  canvas ctx image data
@@ -100,7 +157,25 @@ class Renderer {
     // framebuffer:  canvas ctx image data
     drawBezierCurve(p0, p1, p2, p3, num_edges, color, framebuffer) {
         // TODO: draw a sequence of straight lines to approximate a Bezier curve
-        
+
+        let stepper = 1.0 / num_edges; // Steppies
+        let point_memory = []; // Storgae faciloty for teh points
+
+        for (let t = 0.0; t <= 1.0; t+=stepper) {
+
+            // Creates point on the belzier curve
+            point_memory.push(
+            {x: Math.ceil((Math.pow(1 - t, 3) * p0.x) + (3 * t * p1.x * Math.pow(1 - t, 2)) + (3 * (1 - t) * p2.x * Math.pow(t, 2)) + (Math.pow(t, 3) * p3.x)),
+             y: Math.ceil((Math.pow(1 - t, 3) * p0.y) + (3 * t * p1.y * Math.pow(1 - t, 2)) + (3 * (1 - t) * p2.y * Math.pow(t, 2)) + (Math.pow(t, 3) * p3.y))});
+
+        }
+        point_memory.push(p3); // Can't forget about p3 - neva neva neva
+
+        // Now we need to draw the belzier curve
+        this.drawVector(point_memory, color, framebuffer);
+
+
+        return point_memory;
         
     }
 
@@ -111,8 +186,29 @@ class Renderer {
     // framebuffer:  canvas ctx image data
     drawCircle(center, radius, num_edges, color, framebuffer) {
         // TODO: draw a sequence of straight lines to approximate a circle
+
+        // We need to use the formula for finding the line of a circle (just line)
+        let point_memory = [];
+        let stepper = 2 * Math.PI / num_edges; // Math.PI NOT Math.Pi
+
+        for (let x = 0; x <= num_edges; x++) { // <= to ensure to get LAST point
+            point_memory.push(
+            {x: (Math.ceil(center.x + radius * Math.cos(x * stepper))), // center.x that THANG to the right
+            y: (Math.ceil(center.y + radius * Math.sin(x * stepper)))}); // center.y that THANG to the UP
+        }
+
+
+        // Same as belzier curve
+        this.drawVector(point_memory, color, framebuffer);
+
+        return point_memory;
         
-        
+    }
+
+    drawVector(point_memory, color, framebuffer) {
+        for (let x = 0; x < point_memory.length-1; x++) {
+            this.drawLine(point_memory[x], point_memory[x+1], color, framebuffer);
+        }
     }
     
     // vertex_list:  array of object [{x: __, y: __}, {x: __, y: __}, ..., {x: __, y: __}]
@@ -129,8 +225,17 @@ class Renderer {
     // framebuffer:  canvas ctx image data
     drawVertex(v, color, framebuffer) {
         // TODO: draw some symbol (e.g. small rectangle, two lines forming an X, ...) centered at position `v`
-        
-        
+
+        // S0, considering a X is better than a triangel (everyone knows) I will use an X
+
+        let p0 = {x: v.x - 3, y: v.y + 3};
+        let p1 = {x: v.x + 3, y: v.y - 3};
+        let p2 = {x: v.x - 3, y: v.y - 3};
+        let p3 = {x: v.x + 3, y: v.y + 3};
+
+        this.drawLine(p0, p1, color, framebuffer);
+        this.drawLine(p3, p2, color, framebuffer);
+
     }
     
     /***************************************************************
